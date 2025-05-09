@@ -73,7 +73,7 @@
             "commandNotFound": "❌ Commande %s non trouvée.",
             "error": "❌ Erreur lors de l'exécution de la commande %s: %s",
             "errorMessage": "Une erreur est survenue lors de l'exécution de la commande.",
-            "notOwner": "❌ Cette commande est réservée aux propriétaires du bot"
+            "notOwner": "Vous n'avez pas la permission d'utiliser cette commande."
         }
     },
     "music": {
@@ -127,5 +127,11 @@
         "list": "**Propriétaires :**",
         "notFound": "Aucun propriétaire trouvé",
         "footer": "Total : %d propriétaire(s)"
+    },
+    "clear": {
+        "wrongChannel": "Cette commande ne peut être utilisée que dans un salon textuel",
+        "botNoPermission": "Je n'ai pas la permission de gérer les messages dans ce salon",
+        "success": "%d messages ont été supprimés",
+        "error": "Une erreur est survenue lors de la suppression des messages : %s"
     }
 } 

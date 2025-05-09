@@ -3,6 +3,7 @@ export const owners: string[] = [
 ];
 
 export function isOwner(userId: string): boolean {
+    console.log('Checking owner:', userId, 'Is owner?', owners.includes(userId));  // Debug log
     return owners.includes(userId);
 }
 

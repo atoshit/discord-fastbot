@@ -1,7 +1,13 @@
-import { SlashCommandBuilder, CommandInteraction, ChatInputApplicationCommandData } from 'discord.js';
+import { 
+    SlashCommandBuilder, 
+    ChatInputCommandInteraction, 
+    ApplicationCommandData,
+    ApplicationCommandType,
+    MessageFlags,
+    EmbedBuilder 
+} from 'discord.js';
 import { CommandOptions } from '../../interfaces/Command';
 import { owners } from '../../config/owners';
-import { EmbedBuilder } from 'discord.js';
 import { CustomClient } from '../../structures/CustomClient';
 import { BaseCommand } from '../../structures/BaseCommand';
 
@@ -17,14 +23,14 @@ export default class OwnersCommand extends BaseCommand {
             name: 'owners',
             description: 'Affiche la liste des propriétaires du bot',
             category: 'admin',
-            ownerOnly: false, 
+            ownerOnly: false,
             data: builder
         };
         
         this.data = {
             name: builder.name,
             description: builder.description,
-            type: 1, // CHAT_INPUT
+            type: ApplicationCommandType.ChatInput,
             options: []
         };
     }
@@ -33,7 +39,7 @@ export default class OwnersCommand extends BaseCommand {
         return this.client.locale.t(`owners.${key}`, undefined, ...args);
     }
 
-    async execute(interaction: CommandInteraction) {
+    async execute(interaction: ChatInputCommandInteraction): Promise<void> {
         const ownerUsers = await Promise.all(
             owners.map(async id => {
                 try {
@@ -47,7 +53,7 @@ export default class OwnersCommand extends BaseCommand {
         const validOwners = ownerUsers.filter(user => user !== null);
 
         const embed = new EmbedBuilder()
-            .setColor('#FFD700')  // Yellow color
+            .setColor('#FFD700')
             .setTitle(this.t('title'))
             .setDescription(this.t('description'))
             .addFields({
@@ -59,6 +65,9 @@ export default class OwnersCommand extends BaseCommand {
             .setFooter({ text: this.t('footer', validOwners.length) })
             .setTimestamp();
 
-        await interaction.reply({ embeds: [embed] });
+        await interaction.reply({
+            embeds: [embed],
+            flags: MessageFlags.Ephemeral
+        });
     }
 } 

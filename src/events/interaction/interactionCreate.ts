@@ -4,31 +4,21 @@ import { CustomClient } from '../../structures/CustomClient';
 export default {
     name: Events.InteractionCreate,
     async execute(interaction: Interaction) {
+        console.log('Interaction received:', interaction.type); 
+        
         if (!interaction.isChatInputCommand()) return;
+        console.log('Command interaction received:', interaction.commandName);  
 
         const client = interaction.client as CustomClient;
-        const command = client.commands.commands.get(interaction.commandName);
-
-        if (!command) {
-            console.error(`❌ Commande ${interaction.commandName} non trouvée.`);
-            return;
-        }
 
         try {
-            await command.execute(interaction);
+            await client.commands.handleCommand(interaction);
         } catch (error) {
-            console.error(`❌ Erreur lors de l'exécution de la commande ${interaction.commandName}:`, error);
-            
-            const replyData = {
-                content: 'Une erreur est survenue lors de l\'exécution de la commande.',
+            console.error('Error handling command:', error);
+            await interaction.reply({
+                content: client.locale.t('interaction.error', interaction.commandName, error),
                 ephemeral: true
-            };
-
-            if (interaction.replied || interaction.deferred) {
-                await interaction.followUp(replyData);
-            } else {
-                await interaction.reply(replyData);
-            }
+            });
         }
     }
 }; 

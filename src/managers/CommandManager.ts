@@ -1,4 +1,4 @@
-import { Collection, REST, Routes, CommandInteraction } from 'discord.js';
+import { Collection, REST, Routes, CommandInteraction, MessageFlags } from 'discord.js';
 import { BaseCommand } from '../structures/BaseCommand';
 import { CustomClient } from '../structures/CustomClient';
 import { readdirSync } from 'fs';
@@ -62,29 +62,42 @@ export class CommandManager {
     }
 
     async handleCommand(interaction: CommandInteraction) {
+        console.log('Handling command:', interaction.commandName, 'from user:', interaction.user.tag);
+
         const command = this.commands.get(interaction.commandName);
+        
+        console.log('Command executed:', interaction.commandName);
+        console.log('Command options:', command?.options);
+        console.log('Is owner only?', command?.options?.ownerOnly);
         
         if (!command) {
             return interaction.reply({
-                content: this.t('interaction.commandNotFound', interaction.commandName),
-                ephemeral: true
+                content: this.client.locale.t('logs.interaction.commandNotFound', undefined, interaction.commandName),
+                flags: MessageFlags.Ephemeral
             });
         }
 
         try {
-            if (command.options?.ownerOnly && !isOwner(interaction.user.id)) {
-                return interaction.reply({
-                    content: this.t('interaction.notOwner'),
-                    ephemeral: true
-                });
+            if (command.options?.ownerOnly) {
+                console.log('Command is owner only, checking user:', interaction.user.id);
+                const isUserOwner = isOwner(interaction.user.id);
+                console.log('Is user owner?', isUserOwner);
+
+                if (!isUserOwner) {
+                    await interaction.reply({
+                        content: this.client.locale.t('logs.interaction.notOwner'),
+                        flags: MessageFlags.Ephemeral
+                    });
+                    return;
+                }
             }
 
             await command.execute(interaction);
         } catch (error) {
             console.error(error);
             await interaction.reply({
-                content: this.t('interaction.error', interaction.commandName, error),
-                ephemeral: true
+                content: this.client.locale.t('logs.interaction.error', undefined, interaction.commandName, error),
+                flags: MessageFlags.Ephemeral
             });
         }
     }
