@@ -47,7 +47,6 @@
             "folder": "📁 Dossier des commandes: %s",
             "subFolders": "📂 Sous-dossiers trouvés: %s",
             "filesIn": "📂 Fichiers dans %s: %s",
-            "loaded": "✅ Commande chargée: %s",
             "toBeDeployed": "📡 Commandes à déployer: %s",
             "clientId": "🔑 Client ID: %s",
             "deploying": "🔄 Déploiement des commandes slash sur le serveur de test...",

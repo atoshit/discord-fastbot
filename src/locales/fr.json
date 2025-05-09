@@ -47,7 +47,6 @@
             "folder": "📁 Dossier des commandes: %s",
             "subFolders": "📂 Sous-dossiers trouvés: %s",
             "filesIn": "📂 Fichiers dans %s: %s",
-            "loaded": "✅ Commande chargée: %s",
             "toBeDeployed": "📡 Commandes à déployer: %s",
             "clientId": "🔑 Client ID: %s",
             "deploying": "🔄 Déploiement des commandes slash sur le serveur de test...",
@@ -75,5 +74,50 @@
             "error": "❌ Erreur lors de l'exécution de la commande %s: %s",
             "errorMessage": "Une erreur est survenue lors de l'exécution de la commande."
         }
+    },
+    "music": {
+        "play": {
+            "success": "🎵 Lecture de : %s",
+            "error": "❌ Erreur lors de la lecture : %s"
+        },
+        "stop": {
+            "success": "⏹️ Lecture arrêtée",
+            "error": "❌ Erreur lors de l'arrêt : %s"
+        },
+        "pause": {
+            "success": "⏸️ Lecture en pause",
+            "error": "❌ Erreur lors de la mise en pause : %s"
+        },
+        "skip": {
+            "success": "⏭️ Musique suivante",
+            "error": "❌ Erreur lors du passage à la suivante : %s"
+        }
+    },
+    "tickets": {
+        "create": {
+            "success": "🎫 Ticket créé : %s",
+            "error": "❌ Erreur lors de la création du ticket : %s"
+        },
+        "close": {
+            "success": "🔒 Ticket fermé : %s",
+            "error": "❌ Erreur lors de la fermeture du ticket : %s"
+        },
+        "addUser": {
+            "success": "➕ Utilisateur ajouté au ticket : %s",
+            "error": "❌ Erreur lors de l'ajout de l'utilisateur : %s"
+        },
+        "removeUser": {
+            "success": "➖ Utilisateur retiré du ticket : %s",
+            "error": "❌ Erreur lors du retrait de l'utilisateur : %s"
+        }
+    },
+    "presence": {
+        "servers": "%d serveurs 🌐",
+        "members": "%d membres 👥",
+        "commands": "%d commandes ⌨️",
+        "uptime": "discord depuis %s ⏰",
+        "channels": "%d salons 📺",
+        "tickets": "%d tickets ouverts 🎫",
+        "version": "version %s 📦"
     }
 } 

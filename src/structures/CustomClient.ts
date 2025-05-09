@@ -6,6 +6,7 @@ import { TicketManager } from '../managers/TicketManager';
 import { CacheManager } from '../managers/CacheManager';
 import { LocaleManager } from '../managers/LocaleManager';
 import { DataManager } from '../managers/DataManager';
+import { ActivityManager } from '../managers/ActivityManager';
 
 export class CustomClient extends DiscordClient {
     public commands: CommandManager;
@@ -15,6 +16,7 @@ export class CustomClient extends DiscordClient {
     public cache: CacheManager;
     public locale: LocaleManager;
     public data: DataManager;
+    public activities: ActivityManager;
 
     constructor(options: ClientOptions) {
         super(options);
@@ -25,6 +27,7 @@ export class CustomClient extends DiscordClient {
         this.tickets = new TicketManager(this);
         this.cache = new CacheManager();
         this.data = new DataManager();
+        this.activities = new ActivityManager(this);
     }
 
     private t(key: string, ...args: any[]) {
