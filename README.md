@@ -1,4 +1,4 @@
-# 🛠️ **Cahier des charges – Bot Discord multifonctions**
+# 🛠️ **Cahier des charges**
 
 ## 🔓 **Commandes accessibles à tous les utilisateurs**
 
