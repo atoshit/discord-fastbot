@@ -72,7 +72,8 @@
         "interaction": {
             "commandNotFound": "❌ Commande %s non trouvée.",
             "error": "❌ Erreur lors de l'exécution de la commande %s: %s",
-            "errorMessage": "Une erreur est survenue lors de l'exécution de la commande."
+            "errorMessage": "Une erreur est survenue lors de l'exécution de la commande.",
+            "notOwner": "❌ Cette commande est réservée aux propriétaires du bot"
         }
     },
     "music": {
@@ -119,5 +120,12 @@
         "channels": "%d salons 📺",
         "tickets": "%d tickets ouverts 🎫",
         "version": "version %s 📦"
+    },
+    "owners": {
+        "title": "Propriétaires du Bot",
+        "description": "Liste des propriétaires ayant un accès complet au bot",
+        "list": "**Propriétaires :**",
+        "notFound": "Aucun propriétaire trouvé",
+        "footer": "Total : %d propriétaire(s)"
     }
 } 

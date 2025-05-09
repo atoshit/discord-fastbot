@@ -1,9 +1,10 @@
-import { Collection, REST, Routes } from 'discord.js';
+import { Collection, REST, Routes, CommandInteraction } from 'discord.js';
 import { BaseCommand } from '../structures/BaseCommand';
 import { CustomClient } from '../structures/CustomClient';
 import { readdirSync } from 'fs';
 import { join } from 'path';
 import { config } from '../config';
+import { isOwner } from '../config/owners';
 
 export class CommandManager {
     private client: CustomClient;
@@ -12,6 +13,10 @@ export class CommandManager {
     constructor(client: CustomClient) {
         this.client = client;
         this.commands = new Collection();
+    }
+
+    private t(key: string, ...args: any[]) {
+        return this.client.locale.t(key, undefined, ...args);
     }
 
     async loadCommands() {
@@ -53,6 +58,34 @@ export class CommandManager {
             console.log('\x1b[32m%s\x1b[0m', '✅ Commandes slash déployées avec succès !');
         } catch (error) {
             console.error('\x1b[31m%s\x1b[0m', '❌ Erreur lors du déploiement des commandes :', error);
+        }
+    }
+
+    async handleCommand(interaction: CommandInteraction) {
+        const command = this.commands.get(interaction.commandName);
+        
+        if (!command) {
+            return interaction.reply({
+                content: this.t('interaction.commandNotFound', interaction.commandName),
+                ephemeral: true
+            });
+        }
+
+        try {
+            if (command.options?.ownerOnly && !isOwner(interaction.user.id)) {
+                return interaction.reply({
+                    content: this.t('interaction.notOwner'),
+                    ephemeral: true
+                });
+            }
+
+            await command.execute(interaction);
+        } catch (error) {
+            console.error(error);
+            await interaction.reply({
+                content: this.t('interaction.error', interaction.commandName, error),
+                ephemeral: true
+            });
         }
     }
 } 

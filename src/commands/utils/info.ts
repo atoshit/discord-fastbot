@@ -1,88 +1,87 @@
-import { SlashCommandBuilder, EmbedBuilder, version as discordVersion, ChatInputCommandInteraction } from 'discord.js';
+import { SlashCommandBuilder, CommandInteraction, EmbedBuilder } from 'discord.js';
 import { BaseCommand } from '../../structures/BaseCommand';
 import { CustomClient } from '../../structures/CustomClient';
-import { config } from '../../config';
-import { version as nodeVersion } from 'process';
+import { version } from '../../../package.json';
 import os from 'os';
 
 export default class InfoCommand extends BaseCommand {
     constructor(client: CustomClient) {
-        const data = new SlashCommandBuilder()
-            .setName('info')
-            .setDescription('Affiche les informations du bot')
-            .toJSON();
+        super(client);
 
-        super(client, {
-            name: data.name,
-            description: data.description,
+        const builder = new SlashCommandBuilder()
+            .setName('info')
+            .setDescription('Affiche les informations du bot');
+
+        this.options = {
+            name: 'info',
+            description: 'Affiche les informations du bot',
+            category: 'utils',
+            ownerOnly: false,
+            data: builder
+        };
+
+        this.data = {
+            name: builder.name,
+            description: builder.description,
             type: 1,
             options: []
-        });
+        };
     }
 
-    async execute(interaction: ChatInputCommandInteraction) {
-        const client = interaction.client as CustomClient;
-        const t = (key: string, ...args: any[]) => client.locale.t(`info.${key}`, interaction.locale, ...args);
-        
-        if (!client.user) {
-            await interaction.reply({ content: 'Une erreur est survenue', ephemeral: true });
-            return;
-        }
+    protected override t(key: string, ...args: any[]) {
+        return this.client.locale.t(`info.${key}`, undefined, ...args);
+    }
+
+    async execute(interaction: CommandInteraction) {
+        const totalMemory = Math.round(os.totalmem() / 1024 / 1024);
+        const freeMemory = Math.round(os.freemem() / 1024 / 1024);
+        const usedMemory = totalMemory - freeMemory;
 
         const uptime = process.uptime();
         const days = Math.floor(uptime / 86400);
         const hours = Math.floor(uptime / 3600) % 24;
         const minutes = Math.floor(uptime / 60) % 60;
         const seconds = Math.floor(uptime % 60);
-        
-        const usedMemory = process.memoryUsage().heapUsed / 1024 / 1024;
-        const totalMemory = os.totalmem() / 1024 / 1024;
-        
+
         const embed = new EmbedBuilder()
-            .setColor(config.embedColor)
-            .setTitle(t('title'))
-            .setThumbnail(client.user.displayAvatarURL())
+            .setColor('#0099ff')
+            .setTitle(this.t('title'))
             .addFields([
                 {
-                    name: t('bot.title'),
+                    name: this.t('bot.title'),
                     value: [
-                        `**${t('bot.name')}:** ${client.user.tag}`,
-                        `**${t('bot.id')}:** ${client.user.id}`,
-                        `**${t('bot.version')}:** 1.0.0`,
-                        `**${t('bot.uptime')}:** ${t('bot.uptimeFormat', days, hours, minutes, seconds)}`,
-                        `**${t('bot.ping')}:** ${client.ws.ping}ms`,
-                        `**${t('bot.creator')}:** <@${config.ownersId[0]}>`,
+                        `${this.t('bot.name')}: ${this.client.user?.username}`,
+                        `${this.t('bot.id')}: ${this.client.user?.id}`,
+                        `${this.t('bot.version')}: ${version}`,
+                        `${this.t('bot.uptime')}: ${this.t('bot.uptimeFormat', days, hours, minutes, seconds)}`,
+                        `${this.t('bot.ping')}: ${Math.round(this.client.ws.ping)}ms`
                     ].join('\n'),
                     inline: true
                 },
                 {
-                    name: t('stats.title'),
+                    name: this.t('stats.title'),
                     value: [
-                        `**${t('stats.servers')}:** ${client.guilds.cache.size}`,
-                        `**${t('stats.users')}:** ${client.guilds.cache.reduce((a: number, g: any) => a + g.memberCount, 0)}`,
-                        `**${t('stats.channels')}:** ${client.channels.cache.size}`,
-                        `**${t('stats.roles')}:** ${client.guilds.cache.reduce((a: number, g: any) => a + g.roles.cache.size, 0)}`,
-                        `**${t('stats.tickets')}:** ${client.tickets.getOpenTickets()?.length || 0}`,
+                        `${this.t('stats.servers')}: ${this.client.guilds.cache.size}`,
+                        `${this.t('stats.users')}: ${this.client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)}`,
+                        `${this.t('stats.channels')}: ${this.client.channels.cache.size}`,
+                        `${this.t('stats.tickets')}: ${this.client.tickets.getOpenTickets().length}`
                     ].join('\n'),
                     inline: true
                 },
                 {
-                    name: t('system.title'),
+                    name: this.t('system.title'),
                     value: [
-                        `**${t('system.nodejs')}:** ${nodeVersion}`,
-                        `**${t('system.discordjs')}:** v${discordVersion}`,
-                        `**${t('system.os')}:** ${os.type()} ${os.release()}`,
-                        `**${t('system.cpu')}:** ${os.cpus()[0].model}`,
-                        `**${t('system.ram')}:** ${t('system.ramFormat', usedMemory.toFixed(2), totalMemory.toFixed(2))}`,
-                        `**${t('system.arch')}:** ${os.arch()}`,
+                        `${this.t('system.nodejs')}: ${process.version}`,
+                        `${this.t('system.discordjs')}: ${version}`,
+                        `${this.t('system.os')}: ${os.platform()} ${os.release()}`,
+                        `${this.t('system.cpu')}: ${os.cpus()[0].model}`,
+                        `${this.t('system.ram')}: ${this.t('system.ramFormat', usedMemory, totalMemory)}`,
+                        `${this.t('system.arch')}: ${os.arch()}`
                     ].join('\n'),
                     inline: false
                 }
             ])
-            .setFooter({ 
-                text: t('footer', config.supportServer),
-                iconURL: client.user.displayAvatarURL()
-            })
+            .setFooter({ text: this.t('footer', 'discord.gg/support') })
             .setTimestamp();
 
         await interaction.reply({ embeds: [embed] });

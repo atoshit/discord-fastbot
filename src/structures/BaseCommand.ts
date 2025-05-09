@@ -1,14 +1,19 @@
-import { CommandInteraction, ApplicationCommandData } from 'discord.js';
+import { CommandInteraction, SlashCommandBuilder, ChatInputApplicationCommandData } from 'discord.js';
+import { CommandOptions } from '../interfaces/Command';
 import { CustomClient } from './CustomClient';
 
 export abstract class BaseCommand {
-    protected client: CustomClient;
-    public data: ApplicationCommandData;
+    public client: CustomClient;
+    public options!: CommandOptions;
+    public data!: ChatInputApplicationCommandData;
 
-    constructor(client: CustomClient, data: ApplicationCommandData) {
+    constructor(client: CustomClient) {
         this.client = client;
-        this.data = data;
     }
 
     abstract execute(interaction: CommandInteraction): Promise<void>;
+
+    protected t(key: string, ...args: any[]) {
+        return this.client.locale.t(key, undefined, ...args);
+    }
 } 
