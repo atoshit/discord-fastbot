@@ -1,6 +1,14 @@
 import 'dotenv/config';
-import { Client } from './structures/Client';
-import { config } from './config';
+import { CustomClient } from './structures/CustomClient';
+import { IntentsBitField } from 'discord.js';
 
-const client = new Client();
+const client = new CustomClient({
+    intents: [
+        IntentsBitField.Flags.Guilds,
+        IntentsBitField.Flags.GuildMessages,
+        IntentsBitField.Flags.GuildVoiceStates,
+        IntentsBitField.Flags.GuildMembers
+    ]
+});
+
 client.start(); 

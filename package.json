@@ -9,7 +9,9 @@
     "build": "tsc",
     "watch": "tsc -w",
     "lint": "eslint src/**/*.ts",
-    "format": "prettier --write src/**/*.ts"
+    "format": "prettier --write src/**/*.ts",
+    "deploy": "ts-node src/deploy-commands.ts deploy",
+    "clear-commands": "ts-node src/deploy-commands.ts clear"
   },
   "dependencies": {
     "discord.js": "^14.14.1",

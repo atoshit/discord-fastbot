@@ -1,13 +1,12 @@
-import { Client } from '../structures/Client';
+import { CustomClient } from '../structures/CustomClient';
 
 export class MusicManager {
-    private client: Client;
+    private client: CustomClient;
 
-    constructor(client: Client) {
+    constructor(client: CustomClient) {
         this.client = client;
     }
 
-    // Méthodes à implémenter plus tard
     async play() {}
     async stop() {}
     async pause() {}

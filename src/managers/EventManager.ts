@@ -1,11 +1,12 @@
-import { Client } from '../structures/Client';
+import { CustomClient } from '../structures/CustomClient';
 import { readdirSync } from 'fs';
 import { join } from 'path';
+import { ClientEvents } from 'discord.js';
 
 export class EventManager {
-    private client: Client;
+    private client: CustomClient;
 
-    constructor(client: Client) {
+    constructor(client: CustomClient) {
         this.client = client;
     }
 
@@ -22,9 +23,9 @@ export class EventManager {
                 const event = (await import(filePath)).default;
 
                 if (event.once) {
-                    this.client.once(event.name, (...args) => event.execute(...args, this.client));
+                    this.client.once(event.name, (...args: unknown[]) => event.execute(...args, this.client));
                 } else {
-                    this.client.on(event.name, (...args) => event.execute(...args, this.client));
+                    this.client.on(event.name, (...args: unknown[]) => event.execute(...args, this.client));
                 }
 
                 console.log(`📝 Événement chargé : ${file}`);

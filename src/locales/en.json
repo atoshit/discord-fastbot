@@ -1,0 +1,79 @@
+{
+    "info": {
+        "title": "📊 Bot Information",
+        "bot": {
+            "title": "🤖 Bot",
+            "name": "Name",
+            "id": "ID",
+            "version": "Version",
+            "uptime": "Uptime",
+            "ping": "Ping",
+            "creator": "Creator",
+            "uptimeFormat": "%dd %dh %dm %ds"
+        },
+        "stats": {
+            "title": "📈 Statistics",
+            "servers": "Servers",
+            "users": "Users",
+            "channels": "Channels",
+            "roles": "Roles",
+            "tickets": "Open tickets"
+        },
+        "system": {
+            "title": "💻 System",
+            "nodejs": "Node.js",
+            "discordjs": "Discord.js",
+            "os": "OS",
+            "cpu": "CPU",
+            "ram": "RAM",
+            "arch": "Architecture",
+            "ramFormat": "%dMB / %dMB"
+        },
+        "footer": "Support: %s"
+    },
+    "logs": {
+        "startup": {
+            "starting": "🔄 Starting bot...",
+            "loadingCommands": "📝 Loading commands...",
+            "loadingEvents": "📝 Loading events...",
+            "connecting": "🔑 Connecting to Discord...",
+            "deployingCommands": "🚀 Deploying slash commands...",
+            "error": "❌ Error during startup: %s"
+        },
+        "commands": {
+            "loaded": "📝 Commande chargée : %s",
+            "missingProps": "⚠️ La commande %s manque de propriétés requises",
+            "allLoaded": "✨ Toutes les commandes ont été chargées !",
+            "folder": "📁 Dossier des commandes: %s",
+            "subFolders": "📂 Sous-dossiers trouvés: %s",
+            "filesIn": "📂 Fichiers dans %s: %s",
+            "loaded": "✅ Commande chargée: %s",
+            "toBeDeployed": "📡 Commandes à déployer: %s",
+            "clientId": "🔑 Client ID: %s",
+            "deploying": "🔄 Déploiement des commandes slash sur le serveur de test...",
+            "success": "✅ Commandes déployées avec succès !",
+            "result": "📝 Résultat: %s",
+            "clearing": "🗑️ Suppression de toutes les commandes...",
+            "globalCleared": "✅ Commandes globales supprimées",
+            "guildCleared": "✅ Commandes du serveur supprimées",
+            "clearError": "❌ Erreur lors de la suppression des commandes: %s",
+            "deployError": "❌ Erreur lors du déploiement : %s"
+        },
+        "events": {
+            "loaded": "📝 Événement chargé : %s",
+            "allLoaded": "✨ Tous les événements ont été chargés !",
+            "error": "❌ Erreur lors de l'exécution de l'événement %s: %s"
+        },
+        "ready": {
+            "connected": "✅ Bot connecté avec succès !",
+            "loggedAs": "📡 Connecté en tant que : %s",
+            "servers": "🌐 Présent sur : %d serveur(s)",
+            "members": "👥 Total membres : %d"
+        },
+        "interaction": {
+            "commandNotFound": "❌ Commande %s non trouvée.",
+            "error": "❌ Erreur lors de l'exécution de la commande %s: %s",
+            "errorMessage": "Une erreur est survenue lors de l'exécution de la commande."
+        }
+    }
+} 

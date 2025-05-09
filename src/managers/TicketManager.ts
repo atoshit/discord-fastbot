@@ -1,13 +1,18 @@
-import { Client } from '../structures/Client';
+import { CustomClient } from '../structures/CustomClient';
 
 export class TicketManager {
-    private client: Client;
+    private client: CustomClient;
+    private tickets: Set<string>; 
 
-    constructor(client: Client) {
+    constructor(client: CustomClient) {
         this.client = client;
+        this.tickets = new Set();
     }
 
-    // Méthodes à implémenter plus tard
+    getOpenTickets(): string[] {
+        return Array.from(this.tickets);
+    }
+
     async createTicket() {}
     async closeTicket() {}
     async addUser() {}

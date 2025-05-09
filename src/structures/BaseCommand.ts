@@ -1,11 +1,11 @@
 import { CommandInteraction, ApplicationCommandData } from 'discord.js';
-import { Client } from './Client';
+import { CustomClient } from './CustomClient';
 
 export abstract class BaseCommand {
-    protected client: Client;
+    protected client: CustomClient;
     public data: ApplicationCommandData;
 
-    constructor(client: Client, data: ApplicationCommandData) {
+    constructor(client: CustomClient, data: ApplicationCommandData) {
         this.client = client;
         this.data = data;
     }

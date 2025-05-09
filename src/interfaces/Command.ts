@@ -1,5 +1,5 @@
 import { CommandInteraction, ApplicationCommandData, PermissionResolvable } from 'discord.js';
-import { Client } from '../structures/Client';
+import { CustomClient } from '../structures/CustomClient';
 
 export interface CommandOptions {
     name: string;
@@ -12,7 +12,7 @@ export interface CommandOptions {
 }
 
 export interface Command {
-    client: Client;
+    client: CustomClient;
     options: CommandOptions;
     execute(interaction: CommandInteraction): Promise<void>;
 } 

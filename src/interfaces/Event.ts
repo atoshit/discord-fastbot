@@ -1,8 +1,8 @@
 import { ClientEvents } from 'discord.js';
-import { Client } from '../structures/Client';
+import { CustomClient } from '../structures/CustomClient';
 
 export interface Event {
     name: keyof ClientEvents;
     once?: boolean;
-    execute(...args: any[]): Promise<void>;
+    execute(...args: unknown[]): Promise<void>;
 } 
