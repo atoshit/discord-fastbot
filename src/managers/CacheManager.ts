@@ -2,21 +2,25 @@ import { Collection } from 'discord.js';
 import { BlacklistEntry } from '../interfaces/Blacklist';
 import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
+import { WhitelistedRole } from '../interfaces/WhitelistedRole';
 
 export class CacheManager {
     private cache: Map<string, any>;
     private blacklist: Collection<string, BlacklistEntry>;
     private readonly dataPath: string;
+    private whitelistedRoles: Collection<string, WhitelistedRole>;
 
     constructor() {
         this.cache = new Map();
         this.blacklist = new Collection();
         this.dataPath = join(__dirname, '..', '..', 'data');
+        this.whitelistedRoles = new Collection();
         this.loadCache();
     }
 
     private loadCache(): void {
         this.loadBlacklist();
+        this.loadWhitelistedRoles();
     }
 
     private loadBlacklist(): void {
@@ -49,6 +53,33 @@ export class CacheManager {
         }
     }
 
+    private loadWhitelistedRoles(): void {
+        const filePath = join(this.dataPath, 'whitelisted-roles.json');
+
+        try {
+            if (!existsSync(filePath)) {
+                writeFileSync(filePath, '[]', 'utf-8');
+                return;
+            }
+
+            const data = readFileSync(filePath, 'utf-8');
+            const roles = JSON.parse(data);
+
+            if (Array.isArray(roles)) {
+                for (const role of roles) {
+                    if (this.isValidWhitelistedRole(role)) {
+                        const key = `${role.guildId}-${role.roleId}`;
+                        this.whitelistedRoles.set(key, role);
+                    }
+                }
+            }
+
+            console.log(`📝 Cache rôles whitelistés chargé : ${this.whitelistedRoles.size} entrée(s)`);
+        } catch (error) {
+            console.error('❌ Erreur lors du chargement des rôles whitelistés:', error);
+        }
+    }
+
     private isValidBlacklistEntry(entry: any): entry is BlacklistEntry {
         return (
             typeof entry === 'object' &&
@@ -60,8 +91,20 @@ export class CacheManager {
         );
     }
 
+    private isValidWhitelistedRole(role: any): role is WhitelistedRole {
+        return (
+            typeof role === 'object' &&
+            typeof role.roleId === 'string' &&
+            typeof role.guildId === 'string' &&
+            Array.isArray(role.allowedCommands) &&
+            typeof role.addedBy === 'string' &&
+            typeof role.addedAt === 'number'
+        );
+    }
+
     saveCache(): void {
         this.saveBlacklist();
+        this.saveWhitelistedRoles();
     }
 
     private saveBlacklist(): void {
@@ -72,6 +115,16 @@ export class CacheManager {
             console.log('💾 Cache blacklist sauvegardé');
         } catch (error) {
             console.error('❌ Erreur lors de la sauvegarde du cache blacklist:', error);
+        }
+    }
+
+    private saveWhitelistedRoles(): void {
+        const filePath = join(this.dataPath, 'whitelisted-roles.json');
+        try {
+            const data = JSON.stringify(Array.from(this.whitelistedRoles.values()), null, 2);
+            writeFileSync(filePath, data, 'utf-8');
+        } catch (error) {
+            console.error('❌ Erreur lors de la sauvegarde des rôles whitelistés:', error);
         }
     }
 
@@ -123,5 +176,47 @@ export class CacheManager {
 
     clear() {
         this.cache.clear();
+    }
+
+    addWhitelistedRole(roleId: string, guildId: string, allowedCommands: string[], addedBy: string): void {
+        const key = `${guildId}-${roleId}`;
+        this.whitelistedRoles.set(key, {
+            roleId,
+            guildId,
+            allowedCommands,
+            addedBy,
+            addedAt: Date.now()
+        });
+    }
+
+    removeWhitelistedRole(roleId: string, guildId: string): boolean {
+        const key = `${guildId}-${roleId}`;
+        return this.whitelistedRoles.delete(key);
+    }
+
+    updateWhitelistedRoleCommands(roleId: string, guildId: string, allowedCommands: string[]): boolean {
+        const key = `${guildId}-${roleId}`;
+        const role = this.whitelistedRoles.get(key);
+        if (role) {
+            role.allowedCommands = allowedCommands;
+            this.whitelistedRoles.set(key, role);
+            return true;
+        }
+        return false;
+    }
+
+    isCommandAllowedForRole(roleId: string, guildId: string, commandName: string): boolean {
+        const key = `${guildId}-${roleId}`;
+        const role = this.whitelistedRoles.get(key);
+        return role?.allowedCommands.includes(commandName) ?? false;
+    }
+
+    getWhitelistedRole(roleId: string, guildId: string): WhitelistedRole | undefined {
+        const key = `${guildId}-${roleId}`;
+        return this.whitelistedRoles.get(key);
+    }
+
+    getAllWhitelistedRoles(guildId: string): Collection<string, WhitelistedRole> {
+        return this.whitelistedRoles.filter(role => role.guildId === guildId);
     }
 } 

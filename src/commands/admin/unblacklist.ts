@@ -25,7 +25,7 @@ export default class UnblacklistCommand extends BaseCommand {
             name: 'unbl',
             description: 'Retire un utilisateur de la blacklist',
             category: 'admin',
-            ownerOnly: true,
+            ownerOnly: false,
             data: builder
         };
 
@@ -49,6 +49,14 @@ export default class UnblacklistCommand extends BaseCommand {
     }
 
     async execute(interaction: ChatInputCommandInteraction): Promise<void> {
+        if (!this.hasPermission(interaction)) {
+            await interaction.reply({
+                content: this.client.locale.t('logs.interaction.notAllowed'),
+                flags: MessageFlags.Ephemeral
+            });
+            return;
+        }
+
         const targetUser = interaction.options.getUser('user', true);
 
         if (!this.client.blacklist.isBlacklisted(targetUser.id)) {

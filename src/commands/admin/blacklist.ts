@@ -32,7 +32,7 @@ export default class BlacklistCommand extends BaseCommand {
             name: 'bl',
             description: 'Blacklist un utilisateur',
             category: 'admin',
-            ownerOnly: true,
+            ownerOnly: false,
             data: builder
         };
 
@@ -62,6 +62,14 @@ export default class BlacklistCommand extends BaseCommand {
     }
 
     async execute(interaction: ChatInputCommandInteraction): Promise<void> {
+        if (!this.hasPermission(interaction)) {
+            await interaction.reply({
+                content: this.client.locale.t('logs.interaction.notAllowed'),
+                flags: MessageFlags.Ephemeral
+            });
+            return;
+        }
+
         const targetUser = interaction.options.getUser('user', true);
         const reason = interaction.options.getString('reason', true);
 

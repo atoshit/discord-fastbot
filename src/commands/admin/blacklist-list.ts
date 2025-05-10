@@ -21,7 +21,7 @@ export default class BlacklistListCommand extends BaseCommand {
             name: 'bllist',
             description: 'Affiche la liste des utilisateurs blacklistés',
             category: 'admin',
-            ownerOnly: true,
+            ownerOnly: false,
             data: builder
         };
 
@@ -38,6 +38,14 @@ export default class BlacklistListCommand extends BaseCommand {
     }
 
     async execute(interaction: ChatInputCommandInteraction): Promise<void> {
+        if (!this.hasPermission(interaction)) {
+            await interaction.reply({
+                content: this.client.locale.t('logs.interaction.notAllowed'),
+                flags: MessageFlags.Ephemeral
+            });
+            return;
+        }
+
         const entries = this.client.blacklist.getAllEntries();
 
         if (entries.size === 0) {

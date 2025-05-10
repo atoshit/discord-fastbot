@@ -73,7 +73,8 @@
             "commandNotFound": "❌ Commande %s non trouvée.",
             "error": "❌ Erreur lors de l'exécution de la commande %s: %s",
             "errorMessage": "Une erreur est survenue lors de l'exécution de la commande.",
-            "notOwner": "Vous n'avez pas la permission d'utiliser cette commande."
+            "notOwner": "Vous n'avez pas la permission d'utiliser cette commande.",
+            "notAllowed": "Vous n'avez pas la permission d'utiliser cette commande."
         }
     },
     "music": {
@@ -165,5 +166,31 @@
         "entryDetails": "**Blacklisté par:** %s\n**Date:** %s\n**Tentatives de retour:** %d\n**Raison:** %s",
         "entryError": "Erreur lors de la récupération des détails",
         "listFooter": "Total: %d utilisateur(s) blacklisté(s)"
+    },
+    "whitelistRole": {
+        "alreadyWhitelisted": "Ce rôle est déjà whitelisté",
+        "selectCommands": "Sélectionnez les commandes à autoriser",
+        "selectTitle": "Configuration des permissions",
+        "selectDescription": "Sélectionnez les commandes que le rôle **%s** pourra utiliser",
+        "successTitle": "✅ Rôle whitelisté",
+        "successDescription": "Le rôle **%s** a été whitelisté avec succès",
+        "allowedCommands": "Commandes autorisées",
+        "timeout": "La sélection a expiré, veuillez réessayer",
+        "notWhitelisted": "Ce rôle n'est pas whitelisté",
+        "removed": "Le rôle **%s** a été retiré de la whitelist",
+        "listTitle": "📋 Liste des rôles whitelistés",
+        "listDescription": "Liste des rôles ayant des permissions spéciales",
+        "noRoles": "Aucun rôle whitelisté",
+        "entryDetails": "**Ajouté par:** %s\n**Date:** %s\n**Commandes:** %s",
+        "listFooter": "Total: %d rôle(s) whitelisté(s)",
+        "commandDesc": {
+            "clear": "Supprimer des messages",
+            "blacklist": "Blacklister des utilisateurs",
+            "unblacklist": "Retirer des utilisateurs de la blacklist",
+            "bllist": "Voir la liste des utilisateurs blacklistés",
+            "wlrole": "Whitelist un rôle avec des permissions",
+            "unwlrole": "Retirer un rôle de la whitelist",
+            "wlroleslist": "Voir la liste des rôles whitelistés"
+        }
     }
 } 
