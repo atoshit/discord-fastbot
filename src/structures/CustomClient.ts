@@ -8,6 +8,7 @@ import { LocaleManager } from '../managers/LocaleManager';
 import { DataManager } from '../managers/DataManager';
 import { ActivityManager } from '../managers/ActivityManager';
 import { StatsManager } from '../managers/StatsManager';
+import { BlacklistManager } from '../managers/BlacklistManager';
 
 export class CustomClient extends DiscordClient {
     public commands: CommandManager;
@@ -19,6 +20,7 @@ export class CustomClient extends DiscordClient {
     public data: DataManager;
     public activities: ActivityManager;
     public stats: StatsManager;
+    public blacklist: BlacklistManager;
 
     constructor(options: ClientOptions) {
         super(options);
@@ -31,6 +33,10 @@ export class CustomClient extends DiscordClient {
         this.data = new DataManager();
         this.activities = new ActivityManager(this);
         this.stats = new StatsManager();
+        this.blacklist = new BlacklistManager(this);
+
+        process.on('SIGINT', () => this.handleShutdown());
+        process.on('SIGTERM', () => this.handleShutdown());
     }
 
     private t(key: string, ...args: any[]) {
@@ -57,4 +63,10 @@ export class CustomClient extends DiscordClient {
             process.exit(1);
         }
     }
-} 
+
+    private handleShutdown(): void {
+        console.log('🔄 Arrêt du bot...');
+        this.cache.saveCache();
+        process.exit(0);
+    }
+}

@@ -147,5 +147,23 @@
         "isOwner": "Propriétaire du bot",
         "notOwner": "Membre",
         "error": "Une erreur est survenue lors de la récupération du profil"
+    },
+    "blacklist": {
+        "cannotBlacklistSelf": "Vous ne pouvez pas vous blacklister vous-même",
+        "cannotBlacklistOwner": "Vous ne pouvez pas blacklister un propriétaire du bot",
+        "alreadyBlacklisted": "Cet utilisateur est déjà blacklisté",
+        "successTitle": "L'utilisateur a été blacklisté",
+        "successDescription": "**%s** a été blacklisté avec succès",
+        "userField": "Utilisateur",
+        "authorField": "Blacklisté par",
+        "reasonField": "Raison",
+        "notBlacklisted": "Cet utilisateur n'est pas blacklisté",
+        "unblacklisted": "%s a été retiré de la blacklist",
+        "noEntries": "Aucun utilisateur blacklisté",
+        "listTitle": "📋 Liste des utilisateurs blacklistés",
+        "listDescription": "Liste des utilisateurs bannis de façon permanente",
+        "entryDetails": "**Blacklisté par:** %s\n**Date:** %s\n**Tentatives de retour:** %d\n**Raison:** %s",
+        "entryError": "Erreur lors de la récupération des détails",
+        "listFooter": "Total: %d utilisateur(s) blacklisté(s)"
     }
 } 

@@ -1,0 +1,9 @@
+{
+    "categories": [],
+    "settings": {
+        "autoClose": true,
+        "autoCloseTimeout": 24,
+        "transcriptEnabled": true
+    },
+    "panels": []
+} 

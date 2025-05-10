@@ -1,5 +1,6 @@
 export const owners: string[] = [
-    '1210343418786488334'
+    '1210343418786488334',
+    '813886677142994994'
 ];
 
 export function isOwner(userId: string): boolean {

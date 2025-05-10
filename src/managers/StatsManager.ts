@@ -4,7 +4,7 @@ import { formatDuration } from '../utils/formatters';
 
 export class StatsManager {
     private stats: Collection<string, UserStats>;
-    private voiceStates: Collection<string, number>; // Pour stocker les timestamps de début
+    private voiceStates: Collection<string, number>; 
 
     constructor() {
         this.stats = new Collection();
