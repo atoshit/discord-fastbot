@@ -133,5 +133,19 @@
         "botNoPermission": "Je n'ai pas la permission de gérer les messages dans ce salon",
         "success": "%d messages ont été supprimés",
         "error": "Une erreur est survenue lors de la suppression des messages : %s"
+    },
+    "profile": {
+        "title": "Profil de %s",
+        "messages": "Messages envoyés",
+        "voiceTime": "Temps en vocal",
+        "joinedAt": "Membre depuis",
+        "tickets": {
+            "created": "Tickets créés",
+            "handled": "Tickets gérés"
+        },
+        "roles": "Rôles",
+        "isOwner": "Propriétaire du bot",
+        "notOwner": "Membre",
+        "error": "Une erreur est survenue lors de la récupération du profil"
     }
 } 
