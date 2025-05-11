@@ -63,7 +63,7 @@ export default class UnwhitelistRoleCommand extends BaseCommand {
         this.client.cache.removeWhitelistedRole(role.id, interaction.guildId!);
 
         await interaction.reply({
-            content: this.t('removed', role.name),
+            content: this.t('removed', `<@&${role.id}>`),
             flags: MessageFlags.Ephemeral
         });
     }

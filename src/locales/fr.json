@@ -192,5 +192,24 @@
             "unwlrole": "Retirer un rôle de la whitelist",
             "wlroleslist": "Voir la liste des rôles whitelistés"
         }
+    },
+    "help": {
+        "utilsTitle": "Commandes Utilitaires",
+        "utilsDescription": "Liste des commandes accessibles à tous",
+        "adminTitle": "Commandes Administratives",
+        "adminDescription": "Liste des commandes réservées aux administrateurs",
+        "pageFooter": "Page %d sur %d",
+        
+        "helpDesc": "Affiche ce message d'aide avec la liste des commandes",
+        "infoDesc": "Affiche les informations sur le bot",
+        "profileDesc": "Affiche le profil d'un utilisateur ou le vôtre",
+        
+        "clearDesc": "Supprime un nombre spécifié de messages (1-100)",
+        "blacklistDesc": "Blacklist un utilisateur du bot avec une raison",
+        "unblacklistDesc": "Retire un utilisateur de la blacklist",
+        "blacklistListDesc": "Affiche la liste des utilisateurs blacklistés",
+        "wlroleDesc": "Donne des permissions spéciales à un rôle",
+        "unwlroleDesc": "Retire les permissions spéciales d'un rôle",
+        "wlroleslistDesc": "Affiche la liste des rôles avec leurs permissions"
     }
 } 
